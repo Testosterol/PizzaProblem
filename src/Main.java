@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.List;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
 
@@ -11,15 +8,22 @@ public class Main {
         System.out.println("Hello World!");
 
         Pizza pizza = createPizzaObjectFromFile();
+
+        if (pizza != null) {
+            String[][] pizzaFilling = fillMultidimensionalArray(pizza.getWidth(), pizza.getHeight());
+            System.out.println("cele pole:" + Arrays.deepToString(pizzaFilling));
+        }
     }
 
     private static Pizza createPizzaObjectFromFile() {
         String read;
         String[] splited;
-        getFile();
-        String read;
-        String[] splited;
-
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader("a_example.in"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         if (in != null) {
             try {
                 read = in.readLine();
@@ -35,47 +39,22 @@ public class Main {
         return null;
     }
 
-    private static void fillThePizza(){
-        getFile();
-        BufferedReader in;
-        String read;
-        String[] splited;
-        if (in != null) {
-            try {
-                read = in.readLine();
-                if (read != null) {
-                    splited = read.split(" ");
-                   }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    private static String getLineFromFile() {
-        BufferedReader in = null;
-        String read;
-        String[] splited;
-
+    private static String[][] fillMultidimensionalArray(int x, int y) {
+        Scanner s;
+        String[][] myArray = new String[x][y];
         try {
-            in = new BufferedReader(new FileReader("a_example.in"));
+            s = new Scanner(new File("a_example.in"));
+            s.nextLine();
+            while (s.hasNextLine()) {
+                for (String[] strings : myArray) {
+                    String[] line = s.nextLine().trim().split("");
+                    System.arraycopy(line, 0, strings, 0, line.length);
+                }
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        if (in != null) {
-            for(int x = 0; x < in.lines(); x++){
-                buf.readLine();
-            }
-        }
-        read = buf.readLine();
-
-        if (in != null) {
-            in.lines().parallel().forEach(line -> {
-                        //Invoke the code passing the 'line' that persists in the DB...something like
-                        dbWriter.write(line);
-
-
-                    });
-        }
-
+        return myArray;
     }
+}

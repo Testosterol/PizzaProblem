@@ -42,5 +42,5 @@ public class Pizza {
         this.maxCellsPerSlice = maxCellsPerSlice;
     }
 
-    public void set
+
 }
