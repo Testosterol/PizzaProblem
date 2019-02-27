@@ -9,13 +9,52 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-        getFile();
+
+        Pizza pizza = createPizzaObjectFromFile();
     }
 
-    public static void getFile() {
+    private static Pizza createPizzaObjectFromFile() {
+        String read;
+        String[] splited;
+        getFile();
+        String read;
+        String[] splited;
+
+        if (in != null) {
+            try {
+                read = in.readLine();
+                if (read != null) {
+                    splited = read.split(" ");
+                    return new Pizza(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]),
+                            Integer.parseInt(splited[2]), Integer.parseInt(splited[3]));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private static void fillThePizza(){
+        getFile();
+        BufferedReader in;
+        String read;
+        String[] splited;
+        if (in != null) {
+            try {
+                read = in.readLine();
+                if (read != null) {
+                    splited = read.split(" ");
+                   }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static String getLineFromFile() {
         BufferedReader in = null;
-        Pizza pizza;
-        String read = null;
+        String read;
         String[] splited;
 
         try {
@@ -23,18 +62,20 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         if (in != null) {
-            try {
-                read = in.readLine();
-                if (read != null) {
-                    splited = read.split(" ");
-                    pizza = new Pizza(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]),
-                            Integer.parseInt(splited[2]), Integer.parseInt(splited[3]));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            for(int x = 0; x < in.lines(); x++){
+                buf.readLine();
             }
         }
+        read = buf.readLine();
+
+        if (in != null) {
+            in.lines().parallel().forEach(line -> {
+                        //Invoke the code passing the 'line' that persists in the DB...something like
+                        dbWriter.write(line);
+
+
+                    });
+        }
+
     }
-}
